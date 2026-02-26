@@ -15,8 +15,8 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('firstname');
             $table->string('lastname');
-            $table->boolean('status');
-            $table->integer('depart_datte');
+            $table->boolean('status')->default(true);
+            $table->integer('depart_datte')->default(0);
         });
     }
 
