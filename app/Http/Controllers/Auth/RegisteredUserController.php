@@ -50,6 +50,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if ($user->role_id == 2) {
+            return redirect()->intended(route('/admin_dashboard'));
+        }
+
+        return redirect()->intended(route('user_dashboard', absolute: false));
     }
 }

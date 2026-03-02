@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Colocation extends Model
 {
-    protected $fillable = ['name','description','status'];
+    protected $fillable = ['name','description','status','user_id'];
     public function categories():HasMany{
         return $this->hasMany(Category::class);
     }

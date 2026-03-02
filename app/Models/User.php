@@ -27,8 +27,14 @@ class User extends Authenticatable
         'role_id',
     ];
 
-    public function role():BelongsTo{
+    public function role(): BelongsTo
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function colocations()
+    {
+        return $this->belongsToMany(Colocation::class, 'user_colocation');
     }
 
     /**
