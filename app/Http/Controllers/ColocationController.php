@@ -74,7 +74,7 @@ class ColocationController extends Controller
         return view('colocations.show', [
             'colocation' => $colocation,
             'membres'    => $colocation->users,
-            'depenses'   => $colocation->depenses ?? collect(), // Sécurité : utilise une collection vide si null
+            'depenses'   => $colocation->depenses ?? collect(), 
             'categories' => Category::all(),
         ]);
     }

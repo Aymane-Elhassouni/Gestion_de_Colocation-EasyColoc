@@ -24,9 +24,7 @@ Route::middleware(['auth', 'role:1'])->prefix('user')->name('user.')->group(func
 
 Route::get('/invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
 Route::post('/admin/invitations/send', [InvitationController::class, 'inviteUser'])->name('invitation.send');
-// Route::get('/user/dashboard', function () {
-//     return view('user_dashboard');
-// })->middleware(['auth', 'verified'])->name('user_dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

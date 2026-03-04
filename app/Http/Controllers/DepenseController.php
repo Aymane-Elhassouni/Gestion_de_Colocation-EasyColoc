@@ -21,13 +21,13 @@ class DepenseController extends Controller
     }
     public function show($id)
 {
-    // 1. Njibou l-colocation
+    
     $colocation = Colocation::findOrFail($id);
 
-    // 2. Récupérer l-dépenses (Check blli smit l-colonne hiya colocations_id)
+    
     $depenses = Depense::where('colocations_id', $id)->get();
 
-    // 3. DARORI t-passiha hna wast compact
+   
     return view('colocations.show', compact('colocation', 'depenses'));
 }
     public function store(Request $request)
