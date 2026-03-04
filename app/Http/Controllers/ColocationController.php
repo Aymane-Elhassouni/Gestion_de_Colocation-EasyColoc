@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Colocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class ColocationController extends Controller
     public function index()
     {
         $colocations = Auth::user()->colocations;
-        return view('dashboard_colocations.index', compact('colocations'));
+        return view('colocations.index', compact('colocations'));
     }
 
     /**
@@ -30,13 +31,24 @@ class ColocationController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validation kifma bghitiha
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $hasActive = $user
+            ->colocations()
+            ->where('status', 'active')
+            ->wherePivot('left_at', null)
+            ->exists();
+
+        if ($hasActive) {
+            return redirect()->back()
+                ->with('error', 'You already have an active colocation.');
+        }
+
         $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'required|string|max:1000',
         ]);
 
-        // 2. Création mbachira bla array_merge
         $colocation = \App\Models\Colocation::create([
             'name'        => $request->name,
             'description' => $request->description,
@@ -47,15 +59,24 @@ class ColocationController extends Controller
             'role_colocation' => 'owner',
             'left_at'         => null
         ]);
-        return redirect()->back()->with('success', 'Colocation will be successful!');
+
+        return redirect()->back()->with('success', 'Colocation created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // Dans ColocationController.php
+    public function show(Colocation $colocation)
     {
-        //
+        $colocation->load(['users', 'depenses.category', 'depenses.user']);
+
+        return view('colocations.show', [
+            'colocation' => $colocation,
+            'membres'    => $colocation->users,
+            'depenses'   => $colocation->depenses ?? collect(), // Sécurité : utilise une collection vide si null
+            'categories' => Category::all(),
+        ]);
     }
 
     /**

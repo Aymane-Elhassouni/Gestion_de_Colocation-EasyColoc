@@ -19,6 +19,6 @@ class CheckRole
         if(Auth::check() && Auth::user()->role_id == $role){
             return $next($request);
         }
-        return redirect()->route('user_dashboard')->with('error', 'You are not allowed to access this page');
+        return redirect()->route('admin.dashboard')->with('error', 'You are not allowed to access this page');
     }
 }

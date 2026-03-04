@@ -9,16 +9,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Colocation extends Model
 {
-    protected $fillable = ['name','description','status','user_id'];
-    public function categories():HasMany{
+    protected $fillable = ['name', 'description', 'status', 'user_id'];
+    public function categories(): HasMany
+    {
         return $this->hasMany(Category::class);
     }
-    public function depenses():HasMany{
+    public function depenses(): HasMany
+    {
         return $this->hasMany(Depense::class);
     }
-    public function users():BelongsToMany{
-        return $this->belongsToMany(User::class,'user_colocation',
-        'colocation_id','user_id')
-        ->withPivot('left_at','role_colocation')->withTimestamps();
+    public function users()
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'user_colocation')
+            ->withPivot('left_at', 'role_colocation')
+            ->withTimestamps();
     }
 }

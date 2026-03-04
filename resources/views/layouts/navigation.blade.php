@@ -27,7 +27,9 @@
             @php
                 $isAdmin = Auth::user()->role_id == 2;
                 $dashRoute = $isAdmin ? 'admin.dashboard' : 'user.dashboard';
+                $coloc1Route = $isAdmin ? 'admin.colocations.show' : 'user.colocations.show';
                 $colocRoute = $isAdmin ? 'admin.colocations.index' : 'user.colocations.index';
+                $currentColoc = Auth::user()->colocations()->first();
             @endphp
 
             @if (auth()->user() && auth()->user()->role_id === 2)
@@ -44,8 +46,8 @@
                 </a>
             @endif
 
-            <a href="{{ route($dashRoute) }}"
-                class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all group {{ request()->routeIs('*.dashboard') ? 'bg-white/10 text-white font-semibold' : 'hover:bg-white/5 hover:text-white' }}">
+            <a href="#"
+                class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all group {{ request()->routeIs('*.colocations.show') ? 'bg-white/10 text-white font-semibold' : 'hover:bg-white/5 hover:text-white' }}">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -54,7 +56,7 @@
             </a>
 
             <a href="{{ route($colocRoute) }}"
-                class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all group {{ request()->routeIs('*.colocations.*') ? 'bg-white/10 text-white font-semibold' : 'hover:bg-white/5 hover:text-white' }}">
+                class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all group {{ request()->routeIs('*.colocations.index') ? 'bg-white/10 text-white font-semibold' : 'hover:bg-white/5 hover:text-white' }}">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />

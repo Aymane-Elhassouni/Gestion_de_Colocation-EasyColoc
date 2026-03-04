@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
-            $table->integer('token');
             $table->string('email');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('colocation_id')->constrained('colocations');
+            $table->string('token')->unique();
+            $table->foreignId('colocation_id')->constrained()->onDelete('cascade'); // bach t-3ref ina ddar
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
